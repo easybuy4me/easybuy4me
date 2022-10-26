@@ -14,8 +14,8 @@ class AuthController extends Controller
     {
         // api request valiadtion for products
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'username' => 'required|unique:users',
+            'password' => 'required',
+            'username' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -29,7 +29,7 @@ class AuthController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
-                'success'=>false,
+                'success' => false,
                 'message' => 'Invalid Credentials'
             ], 401);
         }
@@ -38,12 +38,11 @@ class AuthController extends Controller
         $token = $user->createToken('AUTH-TOKEN')->plainTextToken;
 
         $response = [
-            'success'=>true,
+            'success' => true,
             'user' => $user,
-            "token"=>$token
+            "token" => $token
         ];
 
         return response($response, 201);
-
     }
 }

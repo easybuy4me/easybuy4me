@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\Refferrals;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -31,12 +32,19 @@ class RegisterController extends Controller
         }
 
         $user = User::create([
+            'id'=>mt_rand(11111,99999),
             'name'=>$request->name,
             'username'=>$request->username,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
             'isRefered'=> $request->referral_code ? 1:0
         ]);
+
+        Wallet::create([
+            'user_id'=>$user->id
+        ]);
+
+        $user->assignRole('customer');
 
         if($request->referral_code)
         {
@@ -78,6 +86,7 @@ class RegisterController extends Controller
         }
 
         $user = User::create([
+            'id'=>mt_rand(11111,99999),
             'name'=>$request->name,
             'username'=>$request->username,
             'email'=>$request->email,
@@ -85,6 +94,12 @@ class RegisterController extends Controller
             'isRefered'=> $request->referral_code ? 1:0,
             'phone_number'=>$request->phone_number_one
         ]);
+
+        Wallet::create([
+            'user_id'=>$user->id
+        ]);
+
+        $user->assignRole('vendor');
 
         Vendor::create([
             'user_id'=>$user->id,

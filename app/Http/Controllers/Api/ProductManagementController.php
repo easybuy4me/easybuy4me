@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
-class ProductController extends Controller
+class ProductManagementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,14 +17,13 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-         // get list of products that belong to the loggedin vendor
-         $products = Product::with('images')->with('tags')->with('vendor')->where('user_id', $request->user()->id)->get();
+        // get list of products that belong to the loggedin vendor
+        $products = Product::with('images')->with('tags')->with('vendor')->where('user_id', $request->user()->id)->get();
 
-         return response()->json([
-             'success'=>true,
-             'data' => $products
-         ],201);
-
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ], 201);
     }
 
     /**
@@ -54,6 +53,7 @@ class ProductController extends Controller
 
         // create product
         $form_data = array(
+            'id' => mt_rand(11111, 99999),
             'product_name' => $request->product_name,
             'price' => $request->price,
             'description' => $request->description,

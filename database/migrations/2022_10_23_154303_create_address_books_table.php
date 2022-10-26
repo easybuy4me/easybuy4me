@@ -19,6 +19,7 @@ return new class extends Migration
             $table->longText('address');
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
+            $table->tinyInteger('is_default')->default(0);
             $table->timestamps();
         });
     }

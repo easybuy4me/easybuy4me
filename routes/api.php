@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\AddressBookController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\CustomOrderController;
 use App\Http\Controllers\Api\OrderController;
-use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProductManagementController;
 use App\Http\Controllers\Api\ProductsController;
 use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\TicketController;
@@ -30,8 +31,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware(['auth', 'second'])->group(function () {
-    Route::apiResource('products', ProductController::class);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('product-management', ProductManagementController::class);
 
     Route::apiResource('tags', TagsController::class);
 
@@ -45,8 +46,10 @@ Route::middleware(['auth', 'second'])->group(function () {
     Route::prefix('vendor')->group(function () {
         Route::post('register', [RegisterController::class, 'vendorRegister']);
     });
+
+    Route::apiResource('address-book',AddressBookController::class);
 });
 
 Route::apiResource('custom-order', CustomOrderController::class);
 
-Route::apiResource('product',ProductsControllerController::class);
+Route::apiResource('products',ProductsController::class);

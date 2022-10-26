@@ -31,6 +31,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
+Route::post('vendor-register', [RegisterController::class, 'vendorRegister']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('product-management', ProductManagementController::class);
 
@@ -44,7 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('tickets', TicketController::class);
 
     Route::prefix('vendor')->group(function () {
-        Route::post('register', [RegisterController::class, 'vendorRegister']);
+        // Route::post('register', [RegisterController::class, 'vendorRegister']);
     });
 
     Route::apiResource('address-book',AddressBookController::class);

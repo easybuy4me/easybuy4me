@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
-            $table->id();
-            $table->string('referral_bonus')->default(0);
-            $table->string('vendor_payment_amount')->default(0);
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->integer('user_id');
+            $table->integer('order_id')->nullable();
+            $table->string('amount')->default(0.00);
+            $table->enum('type',['order','vendor','withdrawal']);
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('transactions');
     }
 };

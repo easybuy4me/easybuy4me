@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Models\Refferrals;
+use App\Models\Setting;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\Wallet;
@@ -66,21 +68,23 @@ class RegisterController extends Controller
 
     function vendorRegister(Request $request)
     {
+        $setting = Setting::first();
+
         // api request valiadtion for products
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'username' => 'required|unique:users',
             'email'=>'nullable|unique:users',
             'password' => 'required|confirmed',
-            'phone_number_one'=>'required',
-            'phone_number_two'=>'nullable',
+            'phone_number'=>'required',
+            'phone_number2'=>'nullable',
             'contact_name'=>'required',
             'operation_days'=>'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 'failed',
+                'success'=>false,
                 'message' => $validator->errors()
             ], 422);
         }
@@ -92,7 +96,7 @@ class RegisterController extends Controller
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
             'isRefered'=> $request->referral_code ? 1:0,
-            'phone_number'=>$request->phone_number_one
+            'phone_number'=>$request->phone_number
         ]);
 
         Wallet::create([
@@ -105,14 +109,18 @@ class RegisterController extends Controller
             'user_id'=>$user->id,
             'operation_day'=>json_encode($request->operation_days),
             'address'=>$request->address,
-            'phone_number2'=>$request->phone_number_two,
+            'phone_number2'=>$request->phone_number2,
             'contact_name'=>$request->contact_name
         ]);
 
-        $payment = Payment::create([
-            'user_id'=>$user->id,
-            'amount'=>'0.00'
-        ]);
+        $reference = 'EB4M-xx' . rand(23899873802, 12938919009);
+
+       $transaction = Transaction::create([
+        'id'=>$reference,
+        'user_id'=>$user->id,
+        'amount'=>$setting->vendor_payment_amount,
+        'type'=>'vendor',
+       ]);
 
         if($request->referral_code)
         {
@@ -127,8 +135,8 @@ class RegisterController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'vendor registered successfully',
-            'data' => $user,
-            'payment'=>$payment,
+            'user' => $user,
+            'transaction'=>$transaction,
             "token"=>$token,
         ], 201);
     }

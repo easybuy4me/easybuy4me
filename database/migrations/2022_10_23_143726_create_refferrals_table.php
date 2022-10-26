@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('parant_id');
             $table->integer('user_id');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

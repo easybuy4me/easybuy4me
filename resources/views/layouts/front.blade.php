@@ -55,9 +55,6 @@
     <!-- SPECIFIC CSS -->
     <link href="{{ asset('public/assets/css/home.css') }}" rel="stylesheet">
 
-    <!-- YOUR CUSTOM CSS -->
-    <link href="{{ asset('public/assets/css/custom.css') }}" rel="stylesheet">
-
     @yield('styles')
 </head>
 

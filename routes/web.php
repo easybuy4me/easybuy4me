@@ -15,7 +15,12 @@ use Inertia\Inertia;
 |
 */
 
-Route::view('','welcome')->name('home');
+
+Route::get('{any}', function () {
+    return view('app');
+})->where('any', '.*');
+
+// Route::view('','welcome')->name('home');
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [

@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('referral_bonus')->default(0);
             $table->string('vendor_payment_amount')->default(0);
+            $table->string('logo')->nullable();
+            $table->string('favicon')->nullable();
+            $table->string('title')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

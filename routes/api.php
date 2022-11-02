@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CustomOrderController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductManagementController;
 use App\Http\Controllers\Api\ProductsController;
+use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\TicketController;
 use Illuminate\Http\Request;
@@ -51,6 +52,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('address-book',AddressBookController::class);
 });
+
+Route::get('settings',[SettingsController::class,'index']);
 
 Route::apiResource('custom-order', CustomOrderController::class);
 

@@ -16,27 +16,7 @@ use Inertia\Inertia;
 */
 
 
-Route::get('{any}', function () {
-    return view('app');
-})->where('any', '.*');
+Route::view('/','welcome');
 
-// Route::view('','welcome')->name('home');
-
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('vendor/regsiter',function(){
-    return view('vendor-reg');
-});
 
 require __DIR__.'/auth.php';

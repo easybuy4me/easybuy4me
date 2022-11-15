@@ -14,9 +14,14 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    function verify()
+    {
+        return response()->json(['message'=>'success']);
+    }
     function callback()
     {
-        $settings = Setting::first();
+
+        $settings = Setting::find(1);
 
         $status = request()->status;
 

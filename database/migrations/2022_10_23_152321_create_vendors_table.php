@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('operation_day')->default('{}');
             $table->longText('address');
             $table->string('phone_number2')->nullable();
-            $table->string('contact_name')->nullable();
+            $table->string('contact_person')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

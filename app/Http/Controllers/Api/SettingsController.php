@@ -12,6 +12,6 @@ class SettingsController extends Controller
     {
         $data = Setting::first();
 
-        return response()->json(['success'=>true,'data'=>$data]);
+        return response()->json(['success'=>true,$data]);
     }
 }

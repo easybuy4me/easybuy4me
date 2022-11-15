@@ -17,7 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('referral_bonus')->default(0);
             $table->string('vendor_payment_amount')->default(0);
+            $table->string('flutterwave_public_key')->default(0);
+            $table->string('flutterwave_secret_key')->default(0);
+            $table->string('cloudinary_url')->nullable();
             $table->string('logo')->nullable();
+            $table->string('splash_screen_img')->nullable();
+            $table->string('splash_screen_header')->nullable();
+            $table->string('splash_screen_text')->nullable();
             $table->string('favicon')->nullable();
             $table->string('title')->nullable();
             $table->string('email')->nullable();

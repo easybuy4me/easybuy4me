@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('refferrals', function (Blueprint $table) {
             $table->id();
-            $table->integer('parant_id');
+            $table->integer('parent_id');
             $table->integer('user_id');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();

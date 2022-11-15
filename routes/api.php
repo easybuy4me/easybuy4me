@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\CustomOrderController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProductManagementController;
 use App\Http\Controllers\Api\ProductsController;
 use App\Http\Controllers\Api\SettingsController;
@@ -25,9 +26,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -58,3 +59,5 @@ Route::get('settings',[SettingsController::class,'index']);
 Route::apiResource('custom-order', CustomOrderController::class);
 
 Route::apiResource('products',ProductsController::class);
+
+Route::post('flutterwave-callback',[PaymentController::class,'callback']);

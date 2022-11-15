@@ -68,7 +68,7 @@ class RegisterController extends Controller
 
     function vendorRegister(Request $request)
     {
-        $setting = Setting::first();
+        $setting = Setting::find(1);
 
         // api request valiadtion for products
         $validator = Validator::make($request->all(), [
@@ -78,15 +78,30 @@ class RegisterController extends Controller
             'password' => 'required|confirmed',
             'phone_number'=>'required',
             'phone_number2'=>'nullable',
-            'contact_name'=>'required',
-            'operation_days'=>'required'
+            'contact_person'=>'required',
+            'operation_days'=>'nullable',
+            'address'=>'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success'=>false,
-                'message' => $validator->errors()
+                'message' => json_encode($validator->errors())
             ], 422);
+        }
+
+        // check if referral exist
+        if($request->referral_code)
+        {
+            $parent = User::find($request->referral_code);
+
+            if(!$parent)
+            {
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'invalid referral code'
+                ], 422);
+            }
         }
 
         $user = User::create([
@@ -110,7 +125,7 @@ class RegisterController extends Controller
             'operation_day'=>json_encode($request->operation_days),
             'address'=>$request->address,
             'phone_number2'=>$request->phone_number2,
-            'contact_name'=>$request->contact_name
+            'contact_person'=>$request->contact_person
         ]);
 
         $reference = 'EB4M-xx' . rand(23899873802, 12938919009);

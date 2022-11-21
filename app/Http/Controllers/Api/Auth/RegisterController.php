@@ -91,9 +91,9 @@ class RegisterController extends Controller
         }
 
         // check if referral exist
-        if($request->referral_code)
+        if(isset($request->referral_code))
         {
-            $parent = User::find($request->referral_code);
+            $parent = User::where('id',$request->referral_code)->first();
 
             if(!$parent)
             {
@@ -110,7 +110,7 @@ class RegisterController extends Controller
             'username'=>$request->username,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
-            'isRefered'=> $request->referral_code ? 1:0,
+            'isRefered'=> isset($request->referral_code) ? 1:0,
             'phone_number'=>$request->phone_number
         ]);
 
@@ -137,7 +137,7 @@ class RegisterController extends Controller
         'type'=>'vendor',
        ]);
 
-        if($request->referral_code)
+        if(isset($request->referral_code))
         {
             Refferrals::create([
                 'user_id'=>$user->id,

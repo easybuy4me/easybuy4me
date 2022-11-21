@@ -7,6 +7,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- GOOGLE WEB FONT -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="anonymous">

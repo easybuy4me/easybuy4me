@@ -10,7 +10,7 @@ class SettingsController extends Controller
 {
     function index()
     {
-        $data = Setting::first();
+        $data = Setting::where('id',1)->first();
 
         return response()->json(['success'=>true,$data]);
     }

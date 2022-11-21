@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ProductsController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\TicketController;
+use App\Http\Controllers\Api\VendorManagementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,12 +48,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('ticket-reply/{id}', [TicketController::class, 'reply']);
     Route::apiResource('tickets', TicketController::class);
 
-    Route::prefix('vendor')->group(function () {
-        // Route::post('register', [RegisterController::class, 'vendorRegister']);
-    });
+    // Route::prefix('vendor')->group(function () {
+    //     // Route::post('register', [RegisterController::class, 'vendorRegister']);
+    // });
 
     Route::apiResource('address-book',AddressBookController::class);
+
 });
+
+Route::apiResource('vendors',VendorManagementController::class);
 
 Route::get('settings',[SettingsController::class,'index']);
 
